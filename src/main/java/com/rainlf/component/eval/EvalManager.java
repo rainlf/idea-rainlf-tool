@@ -10,6 +10,9 @@ import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -19,6 +22,8 @@ import java.util.List;
  * @date : 3/16/2022 4:28 PM
  */
 public class EvalManager {
+    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
     public List<String> loadLicenceInfo() {
         List<String> licenceInfoList = new ArrayList<>();
         File evalDir = getEvalDir();
@@ -55,7 +60,7 @@ public class EvalManager {
         try {
             DataInputStream dis = new DataInputStream(new FileInputStream(file));
             Date expireDate = new Date(~dis.readLong() + 2592000000L);
-            return expireDate.toString();
+            return sdf.format(expireDate);
         } catch (IOException e) {
             throw new RuntimeException("getExpireDate failed", e);
         }

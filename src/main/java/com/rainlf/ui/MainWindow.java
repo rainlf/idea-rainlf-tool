@@ -23,8 +23,8 @@ public class MainWindow {
     private JPanel evalButtonPane;
     private JPanel helloPane;
 
-    private Project project;
-    private EvalManager evalManager;
+    private final Project project;
+    private final EvalManager evalManager;
 
     public MainWindow(Project project, EvalManager evalManager) {
         this.project = project;
@@ -39,6 +39,7 @@ public class MainWindow {
     }
 
     private void loadLicenseInfo() {
+        licenseInfoList.setListData(new String[0]);
         licenseInfoList.setListData(evalManager.loadLicenceInfo().toArray(new String[0]));
     }
 
