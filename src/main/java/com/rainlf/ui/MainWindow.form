@@ -31,7 +31,7 @@
                 </constraints>
                 <properties>
                   <font name="JetBrains Mono ExtraBold"/>
-                  <text value="License Info:"/>
+                  <text value="License Info"/>
                 </properties>
               </component>
               <component id="9813b" class="javax.swing.JList" binding="licenseInfoList">
