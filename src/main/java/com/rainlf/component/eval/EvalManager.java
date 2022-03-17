@@ -1,18 +1,10 @@
 package com.rainlf.component.eval;
 
-import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.application.PathManager;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.util.io.FileUtil;
 
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -46,7 +38,7 @@ public class EvalManager {
             File[] files = evalDir.listFiles();
             if (files != null) {
                 for (File file : files) {
-                    FileUtil.delete(file);
+                    resetEvalFile(file);
                 }
             }
         }
@@ -63,6 +55,17 @@ public class EvalManager {
             return sdf.format(expireDate);
         } catch (IOException e) {
             throw new RuntimeException("getExpireDate failed", e);
+        }
+    }
+
+    private void resetEvalFile(File file) {
+        boolean success = FileUtil.delete(file);
+        if (!success) {
+            try (DataOutputStream dos = new DataOutputStream(new FileOutputStream(file))) {
+                dos.writeLong(~System.currentTimeMillis());
+            } catch (IOException e) {
+                throw new RuntimeException("update eval file failed", e);
+            }
         }
     }
 }
