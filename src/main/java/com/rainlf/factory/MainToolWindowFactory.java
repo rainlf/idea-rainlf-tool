@@ -6,6 +6,8 @@ import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowFactory;
 import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentFactory;
+import com.rainlf.component.encode.EncodeManager;
+import com.rainlf.component.encode.EncodeManagerProxy;
 import com.rainlf.component.eval.EvalManager;
 import com.rainlf.ui.MainWindow;
 import org.jetbrains.annotations.NotNull;
@@ -17,7 +19,7 @@ import org.jetbrains.annotations.NotNull;
 public class MainToolWindowFactory implements ToolWindowFactory, DumbAware {
     @Override
     public void createToolWindowContent(@NotNull Project project, @NotNull ToolWindow toolWindow) {
-        MainWindow mainWindow = new MainWindow(project, new EvalManager());
+        MainWindow mainWindow = new MainWindow(project, new EvalManager(), EncodeManagerProxy.getProxy(new EncodeManager()));
         ContentFactory contentFactory = ContentFactory.SERVICE.getInstance();
         Content content = contentFactory.createContent(mainWindow.getMainPanel(), "", false);
         toolWindow.getContentManager().addContent(content);
